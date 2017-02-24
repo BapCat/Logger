@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use BapCat\Logger\LogStack;
+
+$stack = new LogStack();
+$logger = $stack->push()->toConsole()->toFile(__DIR__ . '/logs/test');
+
+(function() use($logger) {
+  $logger->info(new Exception);
+})();
+
+$stack->pop();
