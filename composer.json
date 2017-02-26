@@ -1,7 +1,7 @@
 {
-  "name": "bapcat/logging",
+  "name": "bapcat/logger",
   "license": "GPLv3",
-  "homepage": "http://github.com/BapCat/Logging",
+  "homepage": "http://github.com/BapCat/Logger",
   "keywords": ["Log", "Logging", "Logger"],
   "authors": [
     {
