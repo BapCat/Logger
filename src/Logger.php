@@ -182,10 +182,6 @@ class Logger {
   private function updateFile($file) {
     $this->closeFile();
     
-    if($this->logs !== null) {
-      $file = $this->logs->child[$file]->full_path;
-    }
-    
     $this->file = $file;
     $this->time = date('Ymd');
   }
@@ -193,8 +189,10 @@ class Logger {
   private function initFile() {
     $this->updateFile($this->file);
     
-    $file = "{$this->file}.{$this->time}";
-    $link = "{$this->file}.today";
+    $prefix = $this->logs === null ? '' : "{$this->logs->child[$this->file]->full_path}";
+    
+    $file = "$prefix{$this->file}.{$this->time}";
+    $link = "$prefix{$this->file}.today";
     $basename = basename($file);
     
     if(!is_link($link) || readlink($link) !== $basename) {
