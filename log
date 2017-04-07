@@ -9,7 +9,7 @@ $stack = new LogStack();
 $logger = $stack->push()->toConsole()->toFile(__DIR__ . '/logs/test');
 
 (function() use($logger) {
-  $logger->info(new Exception);
+  $logger->info(new Exception("This is a test"));
 })();
 
 $stack->pop();

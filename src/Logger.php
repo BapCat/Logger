@@ -268,7 +268,7 @@ class Logger {
     $prefix = '';
     $caller = null;
     
-    $trace = debug_backtrace();
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     
     foreach($trace as $frame) {
       if(
