@@ -1,5 +1,7 @@
 <?php namespace BapCat\Logger;
 
+use BapCat\Persist\Directory;
+
 class LogStack {
   /**
    * @var  Logger[]  $loggers  Our logger stack
@@ -10,6 +12,18 @@ class LogStack {
    * @var  ?Logger  $top  The logger on the top of the stack
    */
   private $top = null;
+  
+  /**
+   * @var  ?Directory  $logs  Where to store the logs
+   */
+  private $logs = null;
+  
+  /**
+   * @param  ?Directory  $logs  Where to store the logs
+   */
+  public function __construct(Directory $logs = null) {
+    $this->logs = $logs;
+  }
   
   /**
    * Gets the `Logger` on the top of the stack.  If the stack is empty, it pushes
@@ -33,7 +47,7 @@ class LogStack {
    * @return  Logger  The new logger
    */
   public function push($level = null) {
-    return $this->loggers[] = $this->top = new Logger($level);
+    return $this->loggers[] = $this->top = new Logger($level, $this->logs);
   }
   
   /**

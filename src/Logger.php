@@ -1,6 +1,7 @@
 <?php namespace BapCat\Logger;
 
 use BapCat\Facade\Facade;
+use BapCat\Persist\Directory;
 use BapCat\Phi\Phi;
 
 use Exception;
@@ -49,6 +50,12 @@ class Logger {
   private $fp = false;
   private $file;
   private $time;
+  private $logs;
+  
+  public function __construct($level = null, Directory $logs = null) {
+    $this->level($level);
+    $this->logs = $logs;
+  }
   
   public function level($level = null) {
     if($level !== null) {
@@ -174,6 +181,10 @@ class Logger {
   
   private function updateFile($file) {
     $this->closeFile();
+    
+    if($this->logs !== null) {
+      $file = $this->logs->child[$file]->full_path;
+    }
     
     $this->file = $file;
     $this->time = date('Ymd');
