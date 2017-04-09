@@ -279,6 +279,8 @@ class Logger {
     
     $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     
+    $closure = 0;
+    
     foreach($trace as $frame) {
       if(
         // Skip classes which generate errors/logging...
@@ -287,6 +289,11 @@ class Logger {
         // Skip functions (NOT methods) which generate errors/logging...
         !(!array_key_exists('class', $frame) && array_key_exists('function', $frame) && in_array($frame['function'], static::$skip_functions))
       ) {
+        if(array_key_exists('function', $frame) && $frame['function'] === '{closure}') {
+          $closure = $frame['line'];
+          continue;
+        }
+        
         $caller = $frame;
         break;
       }
@@ -299,14 +306,18 @@ class Logger {
     }
     
     if(isset($caller['function'])) {
-      $prefix .= $caller['function'] . '():';
+      $prefix .= $caller['function'] . '()';
     }
     
     if(empty($prefix)) {
-      $prefix = $_SERVER['SCRIPT_FILENAME'] . ':';
+      $prefix = $_SERVER['SCRIPT_FILENAME'];
     }
     
-    $prefix = date('H:i:s') . ' [' . getmypid() . "][{$this->level}]: $prefix ";
+    if($closure !== 0) {
+      $prefix .= " {closure@$closure}";
+    }
+    
+    $prefix = date('H:i:s') . ' [' . getmypid() . "][{$this->level}]: $prefix: ";
     
     return $prefix;
   }

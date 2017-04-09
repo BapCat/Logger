@@ -8,7 +8,10 @@ use BapCat\Logger\LogStack;
 $stack = new LogStack();
 $logger = $stack->push()->toConsole()->toFile(__DIR__ . '/logs/test');
 
+$logger->info('Outside');
+
 (function() use($logger) {
+  $logger->info("This is a test");
   $logger->info(new Exception("This is a test"));
 })();
 
