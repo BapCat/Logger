@@ -302,11 +302,11 @@ class Logger {
       $prefix .= $caller['function'] . '():';
     }
     
-    if(!empty($prefix)) {
-      $prefix .= ' ';
+    if(empty($prefix)) {
+      $prefix = $_SERVER['SCRIPT_FILENAME'] . ':';
     }
     
-    $prefix = date('H:i:s') . ' [' . getmypid() . "][$this->level]: $prefix";
+    $prefix = date('H:i:s') . ' [' . getmypid() . "][{$this->level}]: $prefix ";
     
     return $prefix;
   }
