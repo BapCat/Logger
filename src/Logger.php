@@ -160,7 +160,7 @@ class Logger {
       return;
     }
     
-    if(empty($this->_file) && ! $this->console) {
+    if(empty($this->file) && ! $this->console) {
       return;
     }
     
@@ -189,7 +189,7 @@ class Logger {
   private function initFile() {
     $this->updateFile($this->file);
     
-    $prefix = $this->logs === null ? '' : "{$this->logs->child[$this->file]->full_path}";
+    $prefix = $this->logs === null ? '' : "{$this->logs->full_path}/";
     
     $file = "$prefix{$this->file}.{$this->time}";
     $link = "$prefix{$this->file}.today";
