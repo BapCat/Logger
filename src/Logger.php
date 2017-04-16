@@ -290,7 +290,7 @@ class Logger {
         !(!array_key_exists('class', $frame) && array_key_exists('function', $frame) && in_array($frame['function'], static::$skip_functions))
       ) {
         if(array_key_exists('function', $frame) && substr($frame['function'], -9) === '{closure}') {
-          $closure = $frame['line'];
+          $closure = isset($frame['line']) ? $frame['line'] : '?';
           continue;
         }
         
